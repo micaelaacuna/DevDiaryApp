@@ -1,17 +1,19 @@
 const express = require("express");
-const pool = require("./config/db"); // make sure path matches
+const path = require("path");
+const dotenv = require("dotenv");
+const entriesRoutes = require("./routes/entriesRoutes");
+
+dotenv.config();
+
 const app = express();
-const port = 3000;
 
-app.get("/test-db", async (req, res) => {
-  try {
-    const [rows] = await pool.query("SELECT NOW() AS currentTime");
-    res.json({ success: true, time: rows[0].currentTime });
-  } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.static(path.join(__dirname, "public")));
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+app.use("/", entriesRoutes);
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });

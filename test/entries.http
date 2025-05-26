@@ -1,0 +1,23 @@
+GET http://localhost:3000/
+
+#####
+POST http://localhost:3000/entries
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "title": "Today’s progress",
+  "content": "Finished setting up the backend.",
+  "mood": "Happy"
+}
+
+#####
+GET http://localhost:3000/entries/1
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "title": "Today’s progress",
+  "content": "Finished setting up the backend.",
+  "mood": "Happy"
+}
